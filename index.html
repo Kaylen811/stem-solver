@@ -2,71 +2,89 @@
 <html>
 <head>
   <title>STEM Solver</title>
+
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-   <style> 
-     body {
-            font-family: Arial;
-            text-align: center;
-        }
 
-        button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            margin: 5px;
-            cursor: pointer;
-        }
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f6f8;
+    }
 
-        button:hover {
-            background: #45a049;
-        } 
-     .box {
-    background: white;
-    padding: 20px;
-    margin-top: 40px;
-    border-radius: 10px;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-}
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    .box {
+      background: white;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 10px;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 70%;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
 </head>
-<body> 
-     <div class="box">
-    <!-- all your content here -->
+
+<body>
+
+<div class="box">
+
+  <h1>STEM Solver 🚀</h1>
+
+  <input id="problem" placeholder="Type: x^2 + 3*x">
+
+  <br><br>
+
+  <button onclick="solve('derivative')">Derivative</button>
+  <button onclick="solve('integral')">Integral</button>
+  <button onclick="solve('simplify')">Simplify</button>
+  <button onclick="solve('expand')">Expand</button>
+
+  <h3>Result:</h3>
+  <div id="result"></div>
+
 </div>
 
-<h1>STEM Solver</h1>
-
-<input id="problem" placeholder="Type: x^2 + 3*x">
-<button onclick="solve()">Solve</button>
-  <button onclick="solve('simplify')">Simplify</button>
-<button onclick="solve('expand')">Expand</button>
-
-<p id="answer"></p>
-
 <script>
-async function solve() {
+async function solve(type) {
   const problem = document.getElementById("problem").value;
 
-  const response = await fetch("http://127.0.0.1:5000/solve", {
+  const response = await fetch("/solve", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ problem })
+    body: JSON.stringify({ problem, type })
   });
 
   const data = await response.json();
 
-document.getElementById("result").innerHTML = "$$" + data.result + "$$";
-MathJax.typeset();
+  document.getElementById("result").innerHTML = "$$" + data.result + "$$";
+  MathJax.typeset();
 }
 </script>
 
 </body>
-</html> 
+</html>
 
 
