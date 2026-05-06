@@ -85,7 +85,9 @@ def solve():
     else:
         result = integrate(expr, x)
 
-    return jsonify({"result": str(result)})
+  from sympy import latex
+
+return jsonify({"result": latex(result)})
 
 @app.route("/graph", methods=["POST"])
 def graph():
