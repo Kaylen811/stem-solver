@@ -80,12 +80,16 @@ def solve():
     expr = sympify(data["problem"])
     mode = data["type"]
 
-    if mode == "derivative":
-        result = diff(expr, x)
-    else:
-        result = integrate(expr, x)
+from sympy import simplify, expand
 
-  from sympy import latex
+if mode == "derivative":
+    result = diff(expr, x)
+elif mode == "integral":
+    result = integrate(expr, x)
+elif mode == "simplify":
+    result = simplify(expr)
+elif mode == "expand":
+    result = expand(expr)
 
 return jsonify({"result": latex(result)})
 
