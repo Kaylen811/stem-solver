@@ -26,7 +26,8 @@ async function solve() {
 
   const data = await response.json();
 
-  document.getElementById("answer").innerText = data.result;
+document.getElementById("result").innerHTML = "$$" + data.result + "$$";
+MathJax.typeset();
 }
 </script>
 
